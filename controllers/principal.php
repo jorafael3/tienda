@@ -11,8 +11,18 @@ class Principal extends Controller
     }
     function render()
     {
-
-        $this->view->render('principal/nueva');
+        $folder = "principal";
+        $view = "nueva";
+        $assets = [
+            'guardar_js.php'
+        ];
+        $parametros_tienda =  $this->model->Cargar_Parametros_Tienda();
+        $this->view->parametros_tienda = $parametros_tienda;
+        $Categorias_Productos =  $this->model->Cargar_Categorias();
+        $this->view->Categorias_Productos = $Categorias_Productos;
+        $Subcategorias_Productos =  $this->model->Cargar_Subcategorias();
+        $this->view->Subcategorias_Productos = $Subcategorias_Productos;
+        $this->view->render($folder . "/" . $view, $assets);
     }
 
 
@@ -21,8 +31,5 @@ class Principal extends Controller
 
         $array = json_decode(file_get_contents("php://input"), true);
         $Ventas =  $this->model->Cargar_Parametros_Tienda($array);
-
-      
     }
-
 }

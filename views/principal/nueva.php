@@ -1,12 +1,20 @@
 <?php
 
-require 'views/header.php';
+$DATOS_CATEGORIAS = $this->Categorias_Productos;
+$DATOS_SUBCATEGORIAS = $this->Subcategorias_Productos;
+echo "<pre>";
+var_dump($DATOS_SUBCATEGORIAS);
+echo "</pre>";
 
-// var_dump($this->proveedores);
+$PRODUCT_CAT_WIDTH = "160px";
+$PRODUCT_CAT_HEIGHT = "160px";
+
+
 ?>
+
 <div class="container mt-10">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <!-- <div class="col-md-12">
             <div class="row">
                 <div class="d-flex flex-grow-1 flex-stack flex-wrap" id="kt_toolbar">
                     <div class="d-flex flex-column align-items-start me-3 gap-2">
@@ -17,7 +25,7 @@ require 'views/header.php';
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-12 mt-5">
             <!-- Contenido dentro del div -->
             <div class="content">
@@ -31,87 +39,36 @@ require 'views/header.php';
                                 <!--begin::Nav-->
                                 <ul class="nav nav-pills d-flex justify-content-between nav-pills-custom d-grid gap-3 gap-lg-6 mb-6" role="tablist">
                                     <!--begin::Item-->
-                                    <li class="nav-item mb-3 me-0" role="presentation">
-                                        <!--begin::Nav link-->
-                                        <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg show active" data-bs-toggle="pill" href="#kt_pos_food_content_1" style="width: 138px;height: 180px" aria-selected="true" role="tab">
-                                            <!--begin::Icon-->
-                                            <div class="nav-icon mb-3">
-                                                <!--begin::Food icon-->
-                                                <img src="assets/media/svg/food-icons/spaghetti.svg" class="w-50px" alt="">
-                                                <!--end::Food icon-->
-                                            </div>
-                                            <!--end::Icon-->
-                                            <!--begin::Info-->
-                                            <div class="">
-                                                <span class="text-gray-800 fw-bold fs-2 d-block">Lunch</span>
-                                                <span class="text-gray-400 fw-semibold fs-7">8 Options</span>
-                                            </div>
-                                            <!--end::Info-->
-                                        </a>
-                                        <!--end::Nav link-->
-                                    </li>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="nav-item mb-3 me-0" role="presentation">
-                                        <!--begin::Nav link-->
-                                        <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_2" style="width: 138px;height: 180px" aria-selected="false" tabindex="-1" role="tab">
-                                            <!--begin::Icon-->
-                                            <div class="nav-icon mb-3">
-                                                <!--begin::Food icon-->
-                                                <img src="assets/media/svg/food-icons/salad.svg" class="w-50px" alt="">
-                                                <!--end::Food icon-->
-                                            </div>
-                                            <!--end::Icon-->
-                                            <!--begin::Info-->
-                                            <div class="">
-                                                <span class="text-gray-800 fw-bold fs-2 d-block">Salad</span>
-                                                <span class="text-gray-400 fw-semibold fs-7">14 Salads</span>
-                                            </div>
-                                            <!--end::Info-->
-                                        </a>
-                                        <!--end::Nav link-->
-                                    </li>
-                                    <!--end::Item-->
-                                    <!--begin::Item-->
-                                    <li class="nav-item mb-3 me-0" role="presentation">
-                                        <!--begin::Nav link-->
-                                        <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_3" style="width: 138px;height: 180px" aria-selected="false" tabindex="-1" role="tab">
-                                            <!--begin::Icon-->
-                                            <div class="nav-icon mb-3">
-                                                <!--begin::Food icon-->
-                                                <img src="assets/media/svg/food-icons/cheeseburger.svg" class="w-50px" alt="">
-                                                <!--end::Food icon-->
-                                            </div>
-                                            <!--end::Icon-->
-                                            <!--begin::Info-->
-                                            <div class="">
-                                                <span class="text-gray-800 fw-bold fs-2 d-block">Burger</span>
-                                                <span class="text-gray-400 fw-semibold fs-7">5 Burgers</span>
-                                            </div>
-                                            <!--end::Info-->
-                                        </a>
-                                        <!--end::Nav link-->
-                                    </li>
 
-                                    <li class="nav-item mb-3 me-0" role="presentation">
-                                        <!--begin::Nav link-->
-                                        <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg" data-bs-toggle="pill" href="#kt_pos_food_content_3" style="width: 138px;height: 180px" aria-selected="false" tabindex="-1" role="tab">
-                                            <!--begin::Icon-->
-                                            <div class="nav-icon mb-3">
-                                                <!--begin::Food icon-->
-                                                <img src="assets/media/svg/food-icons/cheeseburger.svg" class="w-50px" alt="">
-                                                <!--end::Food icon-->
-                                            </div>
-                                            <!--end::Icon-->
-                                            <!--begin::Info-->
-                                            <div class="">
-                                                <span class="text-gray-800 fw-bold fs-2 d-block">Burger</span>
-                                                <span class="text-gray-400 fw-semibold fs-7">5 Burgers</span>
-                                            </div>
-                                            <!--end::Info-->
-                                        </a>
-                                        <!--end::Nav link-->
-                                    </li>
+                                    <?php
+                                    foreach ($DATOS_CATEGORIAS as $row) {
+                                        $product_cat_active = "";
+                                        $product_cat_id = $row["id"];
+                                        $product_cat_position = $row["position"];
+                                        $product_cat_name = $row["cat_nombre"];
+                                        $product_cat_icon = $row["cat_icon"];
+                                        $product_cat_description = $row["cat_descripcion"];
+                                        if ($row["position"] == 1) {
+                                            $product_cat_active = "show active";
+                                        }
+                                    ?>
+                                        <li class="nav-item mb-3 me-0" role="presentation">
+                                            <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg <?php echo $product_cat_active ?>" data-bs-toggle="pill" href="#kt_pos_food_content_<?php echo $product_cat_position ?>" style="width: <?php echo $PRODUCT_CAT_WIDTH ?>;height: <?php echo $PRODUCT_CAT_HEIGHT ?>" aria-selected="true" role="tab">
+                                                <div class="nav-icon mb-3">
+                                                    <img src="<?php echo $product_cat_icon ?>" class="w-50px" alt="img">
+                                                </div>
+                                                <div class="">
+                                                    <span class="text-gray-800 fw-bold fs-4 d-block"><?php echo $product_cat_name ?></span>
+                                                    <!-- <span class="text-gray-400 fw-semibold fs-7">8 Options</span> -->
+                                                </div>
+                                            </a>
+                                        </li>
+                                    <?php
+
+                                    }
+                                    ?>
+
+
 
                                 </ul>
                                 <!--end::Nav-->
@@ -120,8 +77,19 @@ require 'views/header.php';
                                     <!--begin::Tap pane-->
                                     <div class="tab-pane fade show active" id="kt_pos_food_content_1" role="tabpanel">
                                         <!--begin::Wrapper-->
-                                        <div class="d-flex flex-wrap d-grid gap-5 gap-xxl-9">
+                                        <div class="d-flex flex-wrap d-grid gap-5 gap-xl-9">
                                             <!--begin::Card-->
+                                            <?php
+                                            foreach ($DATOS_SUBCATEGORIAS as $row) {
+
+
+                                            ?>
+                                            <?php
+
+                                            }
+
+                                            ?>
+
                                             <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
                                                 <!--begin::Body-->
                                                 <div class="card-body text-center">
@@ -144,8 +112,7 @@ require 'views/header.php';
                                                 </div>
                                                 <!--end::Body-->
                                             </div>
-                                            <!--end::Card-->
-                                            <!--begin::Card-->
+
                                             <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
                                                 <!--begin::Body-->
                                                 <div class="card-body text-center">
@@ -168,6 +135,30 @@ require 'views/header.php';
                                                 </div>
                                                 <!--end::Body-->
                                             </div>
+
+                                            <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
+                                                <!--begin::Body-->
+                                                <div class="card-body text-center">
+                                                    <!--begin::Food img-->
+                                                    <img src="assets/media/stock/food/img-7.jpg" class="rounded-3 mb-4 w-150px h-150px w-xxl-200px h-xxl-200px" alt="">
+                                                    <!--end::Food img-->
+                                                    <!--begin::Info-->
+                                                    <div class="mb-2">
+                                                        <!--begin::Title-->
+                                                        <div class="text-center">
+                                                            <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">Chef’s Salmon</span>
+                                                            <span class="text-gray-400 fw-semibold d-block fs-6 mt-n1">16 mins to cook</span>
+                                                        </div>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Info-->
+                                                    <!--begin::Total-->
+                                                    <span class="text-success text-end fw-bold fs-1">$12.40$</span>
+                                                    <!--end::Total-->
+                                                </div>
+                                                <!--end::Body-->
+                                            </div>
+
                                         </div>
                                         <!--end::Wrapper-->
                                     </div>
@@ -486,79 +477,3 @@ require 'views/header.php';
         </div>
     </div>
 </div>
-
-
-<!-- Meta Pixel Code -->
-<!-- <script>
-    ! function(f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function() {
-            n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = !0;
-        n.version = '2.0';
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = !0;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s)
-    }(window, document, 'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1534955887076711');
-    fbq('track', 'PageView');
-</script> -->
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1534955887076711&ev=PageView&noscript=1" /></noscript>
-<!-- End Meta Pixel Code -->
-
-
-<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-<script src="assets/js/scripts.bundle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.5/xlsx.full.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
-<?php require 'views/footer.php'; ?>
-<?php require 'funciones/guardar_js.php'; ?>
-<script>
-    // var codeInputs = $('.code-input');
-
-    // // Añadir evento de entrada para cada campo
-    // codeInputs.on('input', function() {
-    //     // Obtener el índice del campo actual
-    //     var currentIndex = codeInputs.index(this);
-
-    //     // Mover al siguiente campo si se ha ingresado un dígito
-    //     if ($(this).val().length === 1 && currentIndex < codeInputs.length - 1) {
-    //         codeInputs.eq(currentIndex + 1).focus();
-    //     }
-    // });
-    // codeInputs.first().focus();
-
-    $(document).on('input', '.code-input', function(event) {
-        var index = $('.code-input').index(this);
-        if (event.originalEvent.inputType === 'deleteContentBackward' && index > 0) {
-            if ($(this).val() === '') {
-                index == 1 ? $('.code-input').eq(0).focus() : $('.code-input').eq(index - 1).focus();
-            }
-        } else if (index < $('.code-input').length - 1) {
-            $('.code-input').eq(index + 1).focus();
-        }
-    });
-
-    $(document).on('keydown', '.code-input', function(event) {
-        if (event.which === 13) { // 13 is the keycode for Enter
-            event.preventDefault();
-            Validar_Codigo();
-        }
-    });
-
-    $("#CELULAR").on('keydown', function(event) {
-        if (event.which === 13) { // 13 is the keycode for Enter
-            event.preventDefault();
-            Guardar_Celular();
-        }
-    });
-</script>

@@ -8,7 +8,10 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     $http = "http://";
 }
 // echo $u;
-define('URL',$http.$u.'/tienda/');// ip local:puerto
+define('URL', $http . $u . '/tienda/'); // ip local:puerto
+define('TIENDA_KEY', "jku(7jsjoaom*o0w9aslla");
+define('TIENDA_NOMBRE', "NOMBRE TIENDA");
+define('TIENDA_ID', "1");
 // define('HOST', '10.5.1.86');
 // define('DB', 'CARTIMEX');
 // define('USER', 'jalvarado');

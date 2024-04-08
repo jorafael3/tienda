@@ -8,36 +8,91 @@ class principalmodel extends Model
         parent::__construct();
     }
 
-    function Cargar_Parametros_Tienda($param)
+    function Cargar_Parametros_Tienda()
     {
         try {
-            $table = "productos_subcategorias";
+
+            $TIENDA = constant("TIENDA_KEY");
+            $table = "parametros_tienda";
             $campos = ["*"];
             $join = [];
-            $condiciones = ["fecha_creado >=" => '20240404'];
+            $condiciones = ["TIENDA_ID" => $TIENDA];
             $ordenamiento = "";
             $agrupamiento = "";
             $result = $this->select($table, $campos, $condiciones, $join, $ordenamiento, $agrupamiento);
-      
-
-            // $tabla = "productos_categorias";
-            // $datos = ["cat_nombre" => "HAMBURGUESAS"];
-            // $condiciones = ["id" => 1];
-            // $result = $this->update($tabla, $datos, $condiciones);
 
 
-            // $tabla = "productos_categorias";
-            // $datos = ["cat_nombre" => "Nuevo Usuario"];
-            // $result = $this->insert($tabla, $datos);
+            $table = "parametros_Horarios";
+            $campos = ["*"];
+            $join = [];
+            $condiciones = ["tienda_id" => $result[1][0]["id"]];
+            $ordenamiento = "";
+            $agrupamiento = "";
+            $result2 = $this->select($table, $campos, $condiciones, $join, $ordenamiento, $agrupamiento);
 
+            // $res = array(
+            //     "success" => $result[0],
+            //     "data" => $result[1],
+            //     "sql" => $result[2]F
+            // );
+
+            return [$result[1], $result2[1]];
+        } catch (Exception $e) {
             $res = array(
-                "success" => $result[0],
-                "data" => $result[1],
-                "sql" => $result[2]
+                "success" => false,
+                "error" => $e->getMessage()
             );
-
             echo json_encode($res);
             exit();
+        }
+    }
+
+    function Cargar_Categorias()
+    {
+        try {
+
+            $TIENDA = constant("TIENDA_ID");
+            $table = "productos_categorias";
+            $campos = ["*"];
+            $join = [];
+            $condiciones = ["tienda_id" => $TIENDA];
+            $ordenamiento = "position asc";
+            $agrupamiento = "";
+            $result = $this->select($table, $campos, $condiciones, $join, $ordenamiento, $agrupamiento);
+
+
+
+            return $result[1];
+        } catch (Exception $e) {
+            $res = array(
+                "success" => false,
+                "error" => $e->getMessage()
+            );
+            echo json_encode($res);
+            exit();
+        }
+    }
+
+
+    function Cargar_Subcategorias()
+    {
+        try {
+
+            $TIENDA = constant("TIENDA_ID");
+            $table = "productos_fichero pf";
+            $campos = ["pf.*,
+            ps.sub_nombre,
+            pc.cat_nombre,
+            pc.`position` "];
+            $join = ["left join productos_subcategorias ps 
+            on ps.id = pf.prod_subcat_id 
+            left join productos_categorias pc 
+            on pc.id = ps.cat_id"];
+            $condiciones = ["pc.tienda_id" => $TIENDA];
+            $ordenamiento = "pc.`position` asc";
+            $agrupamiento = "";
+            $result = $this->select($table, $campos, $condiciones, $join, $ordenamiento, $agrupamiento);
+            return $result[1];
         } catch (Exception $e) {
             $res = array(
                 "success" => false,
