@@ -21,7 +21,6 @@ class principalmodel extends Model
             $agrupamiento = "";
             $result = $this->select($table, $campos, $condiciones, $join, $ordenamiento, $agrupamiento);
 
-
             $table = "parametros_Horarios";
             $campos = ["*"];
             $join = [];
@@ -35,6 +34,7 @@ class principalmodel extends Model
             //     "data" => $result[1],
             //     "sql" => $result[2]F
             // );
+            
 
             return [$result[1], $result2[1]];
         } catch (Exception $e) {

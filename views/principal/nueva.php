@@ -2,9 +2,9 @@
 
 $DATOS_CATEGORIAS = $this->Categorias_Productos;
 $DATOS_SUBCATEGORIAS = $this->Subcategorias_Productos;
-echo "<pre>";
-var_dump($DATOS_SUBCATEGORIAS);
-echo "</pre>";
+// echo "<pre>";
+// var_dump($DATOS_SUBCATEGORIAS);
+// echo "</pre>";
 
 $PRODUCT_CAT_WIDTH = "160px";
 $PRODUCT_CAT_HEIGHT = "160px";
@@ -26,18 +26,18 @@ $PRODUCT_CAT_HEIGHT = "160px";
                 </div>
             </div>
         </div> -->
-        <div class="col-md-12 mt-5">
+        <div class="col-12 mt-5">
             <!-- Contenido dentro del div -->
             <div class="content">
-                <div class="d-flex flex-column flex-xl-row">
+                <div class="d-flex flex-column flex-xl-row ">
                     <!--begin::Content-->
-                    <div class="d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">
+                    <div class="col-xl-8 col-md-12  p-5">
                         <!--begin::Pos food-->
                         <div class="card card-flush card-p-0 bg-transparent border-0">
                             <!--begin::Body-->
                             <div class="card-body">
                                 <!--begin::Nav-->
-                                <ul class="nav nav-pills d-flex justify-content-between nav-pills-custom d-grid gap-3 gap-lg-6 mb-6" role="tablist">
+                                <ul class="nav nav-pills nav-pills-custom mb-3 m-2" role="tablist">
                                     <!--begin::Item-->
 
                                     <?php
@@ -52,7 +52,7 @@ $PRODUCT_CAT_HEIGHT = "160px";
                                             $product_cat_active = "show active";
                                         }
                                     ?>
-                                        <li class="nav-item mb-3 me-0" role="presentation">
+                                        <li class="nav-item mb-3 me-2" role="presentation">
                                             <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg <?php echo $product_cat_active ?>" data-bs-toggle="pill" href="#kt_pos_food_content_<?php echo $product_cat_position ?>" style="width: <?php echo $PRODUCT_CAT_WIDTH ?>;height: <?php echo $PRODUCT_CAT_HEIGHT ?>" aria-selected="true" role="tab">
                                                 <div class="nav-icon mb-3">
                                                     <img src="<?php echo $product_cat_icon ?>" class="w-50px" alt="img">
@@ -71,153 +71,99 @@ $PRODUCT_CAT_HEIGHT = "160px";
 
 
                                 </ul>
-                                <!--end::Nav-->
-                                <!--begin::Tab Content-->
+
+
+
                                 <div class="tab-content">
-                                    <!--begin::Tap pane-->
-                                    <div class="tab-pane fade show active" id="kt_pos_food_content_1" role="tabpanel">
-                                        <!--begin::Wrapper-->
-                                        <div class="d-flex flex-wrap d-grid gap-5 gap-xl-9">
-                                            <!--begin::Card-->
-                                            <?php
-                                            foreach ($DATOS_SUBCATEGORIAS as $row) {
+
+                                    <?php
+                                    foreach ($DATOS_CATEGORIAS as $row) {
+                                        $product_cat_position = $row["position"];
+                                        $product_cat_active = "";
+                                        if ($product_cat_position == 1) {
+                                            $product_cat_active = "show active";
+                                        }
+
+                                    ?>
 
 
-                                            ?>
-                                            <?php
+                                        <div class="tab-pane fade <?php echo $product_cat_active ?>" id="kt_pos_food_content_<?php echo $product_cat_position ?>" role="tabpanel">
 
-                                            }
+                                            <div class="">
+                                                <ul class="list-unstyled">
 
-                                            ?>
+                                                    <?php
 
-                                            <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
-                                                <!--begin::Body-->
-                                                <div class="card-body text-center">
-                                                    <!--begin::Food img-->
-                                                    <img src="assets/media/stock/food/img-2.jpg" class="rounded-3 mb-4 w-150px h-150px w-xxl-200px h-xxl-200px" alt="">
-                                                    <!--end::Food img-->
-                                                    <!--begin::Info-->
-                                                    <div class="mb-2">
-                                                        <!--begin::Title-->
-                                                        <div class="text-center">
-                                                            <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">T-Bone Stake</span>
-                                                            <span class="text-gray-400 fw-semibold d-block fs-6 mt-n1">16 mins to cook</span>
-                                                        </div>
-                                                        <!--end::Title-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Total-->
-                                                    <span class="text-success text-end fw-bold fs-1">$16.50$</span>
-                                                    <!--end::Total-->
-                                                </div>
-                                                <!--end::Body-->
-                                            </div>
+                                                    foreach ($DATOS_SUBCATEGORIAS as $rows) {
+                                                        $product_cat_position_sub = $rows["position"];
+                                                        if ($product_cat_position == $product_cat_position_sub) {
+                                                            $prod_nombre = $rows["prod_nombre"];
+                                                            $prod_descripcion = $rows["prod_descripcion"];
+                                                            $prod_precio = $rows["prod_precio"];
+                                                            $prod_id = $rows["id"];
+                                                            $prod_precio = number_format($prod_precio, 2, '.', ',');
+                                                            $prod_precio = '$' . $prod_precio;
+                                                            $prod_agotado = $rows["prod_agotado"];
 
-                                            <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
-                                                <!--begin::Body-->
-                                                <div class="card-body text-center">
-                                                    <!--begin::Food img-->
-                                                    <img src="assets/media/stock/food/img-7.jpg" class="rounded-3 mb-4 w-150px h-150px w-xxl-200px h-xxl-200px" alt="">
-                                                    <!--end::Food img-->
-                                                    <!--begin::Info-->
-                                                    <div class="mb-2">
-                                                        <!--begin::Title-->
-                                                        <div class="text-center">
-                                                            <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">Chef’s Salmon</span>
-                                                            <span class="text-gray-400 fw-semibold d-block fs-6 mt-n1">16 mins to cook</span>
-                                                        </div>
-                                                        <!--end::Title-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Total-->
-                                                    <span class="text-success text-end fw-bold fs-1">$12.40$</span>
-                                                    <!--end::Total-->
-                                                </div>
-                                                <!--end::Body-->
-                                            </div>
 
-                                            <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
-                                                <!--begin::Body-->
-                                                <div class="card-body text-center">
-                                                    <!--begin::Food img-->
-                                                    <img src="assets/media/stock/food/img-7.jpg" class="rounded-3 mb-4 w-150px h-150px w-xxl-200px h-xxl-200px" alt="">
-                                                    <!--end::Food img-->
-                                                    <!--begin::Info-->
-                                                    <div class="mb-2">
-                                                        <!--begin::Title-->
-                                                        <div class="text-center">
-                                                            <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">Chef’s Salmon</span>
-                                                            <span class="text-gray-400 fw-semibold d-block fs-6 mt-n1">16 mins to cook</span>
-                                                        </div>
-                                                        <!--end::Title-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Total-->
-                                                    <span class="text-success text-end fw-bold fs-1">$12.40$</span>
-                                                    <!--end::Total-->
-                                                </div>
-                                                <!--end::Body-->
+                                                    ?>
+                                                            <li class="mb-6">
+                                                                <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
+
+                                                                    <div class="card-body pt-9 pb-0">
+                                                                        <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                                                                            <div class="col-2 me-7 mb-4" style="width: 200px;"> <!-- Establece el ancho máximo del contenedor -->
+                                                                                <div class="">
+                                                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzWGfd1JADxHpATx3AfNO1jrhB7z1D48gVP6uYq-nxQw&s" alt="image" style="width: 100%; height: auto;"> <!-- Establece el ancho al 100% y deja que la altura se ajuste automáticamente -->
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-8 flex-grow-1">
+                                                                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                                                                    <div class="col-12">
+                                                                                        <div class="d-flex align-items-center mb-2">
+                                                                                            <h3 class="text-gray-900  fs-2 fw-bold me-1"><?php echo $prod_nombre ?></h3>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12 mb-2">
+                                                                                        <span class="text-gray-600 fw-semibold d-block fs-6 mt-3"><?php echo $prod_descripcion ?></span>
+
+                                                                                    </div>
+                                                                                    <div class="col-12 mt-20 d-flex justify-content-between align-items-center">
+                                                                                        <h5 class="text-dark fw-bold fs-1 mr-3"><?php echo $prod_precio ?></h5>
+                                                                                        <a href="#" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Agregar</a>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+
+
+
+                                                    <?php
+
+                                                        }
+                                                    }
+
+                                                    ?>
+
+                                                </ul>
+
+
                                             </div>
 
                                         </div>
-                                        <!--end::Wrapper-->
-                                    </div>
-                                    <!--end::Tap pane-->
-                                    <!--begin::Tap pane-->
-                                    <div class="tab-pane fade" id="kt_pos_food_content_2" role="tabpanel">
-                                        <!--begin::Wrapper-->
-                                        <div class="d-flex flex-wrap d-grid gap-5 gap-xxl-9">
-                                            <!--begin::Card-->
-                                            <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
-                                                <!--begin::Body-->
-                                                <div class="card-body text-center">
-                                                    <!--begin::Food img-->
-                                                    <img src="assets/media/stock/food/img-11.jpg" class="rounded-3 mb-4 w-150px h-150px w-xxl-200px h-xxl-200px" alt="">
-                                                    <!--end::Food img-->
-                                                    <!--begin::Info-->
-                                                    <div class="mb-2">
-                                                        <!--begin::Title-->
-                                                        <div class="text-center">
-                                                            <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">Sweety</span>
-                                                            <span class="text-gray-400 fw-semibold d-block fs-6 mt-n1">16 mins to cook</span>
-                                                        </div>
-                                                        <!--end::Title-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Total-->
-                                                    <span class="text-success text-end fw-bold fs-1">$11.40$</span>
-                                                    <!--end::Total-->
-                                                </div>
-                                                <!--end::Body-->
-                                            </div>
-                                            <!--end::Card-->
-                                            <!--begin::Card-->
-                                            <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
-                                                <!--begin::Body-->
-                                                <div class="card-body text-center">
-                                                    <!--begin::Food img-->
-                                                    <img src="assets/media/stock/food/img-5.jpg" class="rounded-3 mb-4 w-150px h-150px w-xxl-200px h-xxl-200px" alt="">
-                                                    <!--end::Food img-->
-                                                    <!--begin::Info-->
-                                                    <div class="mb-2">
-                                                        <!--begin::Title-->
-                                                        <div class="text-center">
-                                                            <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">Breakfast</span>
-                                                            <span class="text-gray-400 fw-semibold d-block fs-6 mt-n1">16 mins to cook</span>
-                                                        </div>
-                                                        <!--end::Title-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Total-->
-                                                    <span class="text-success text-end fw-bold fs-1">$8.20$</span>
-                                                    <!--end::Total-->
-                                                </div>
-                                                <!--end::Body-->
-                                            </div>
 
-                                        </div>
-                                        <!--end::Wrapper-->
-                                    </div>
+                                    <?php
+
+                                    }
+
+                                    ?>
+
 
                                 </div>
                                 <!--end::Tab Content-->
@@ -228,7 +174,7 @@ $PRODUCT_CAT_HEIGHT = "160px";
                     </div>
                     <!--end::Content-->
                     <!--begin::Sidebar-->
-                    <div class="flex-row-auto w-xl-425px">
+                    <div class="col-xl-4 p-5">
                         <!--begin::Pos order-->
                         <div class="card card-flush bg-body" id="kt_pos_form">
                             <!--begin::Header-->
