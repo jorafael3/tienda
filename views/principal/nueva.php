@@ -130,7 +130,7 @@ $PRODUCT_CAT_HEIGHT = "160px";
                                                                                     </div>
                                                                                     <div class="col-12 mt-20 d-flex justify-content-between align-items-center">
                                                                                         <h5 class="text-dark fw-bold fs-1 mr-3"><?php echo $prod_precio ?></h5>
-                                                                                        <a href="#" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Agregar</a>
+                                                                                        <button href="#" class="btn btn-sm btn-primary me-2 btn-agregar"  data-product-id="<?php echo $prod_id ?>">Agregar</button>
                                                                                     </div>
                                                                                 </div>
 
