@@ -32,4 +32,10 @@ class Principal extends Controller
         $array = json_decode(file_get_contents("php://input"), true);
         $Ventas =  $this->model->Cargar_Parametros_Tienda($array);
     }
+    function Agregar_carrito()
+    {
+
+        $array = json_decode(file_get_contents("php://input"), true);
+        $Ventas =  $this->model->Agregar_carrito($array);
+    }
 }
