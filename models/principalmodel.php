@@ -113,56 +113,62 @@ class principalmodel extends Model
             $campos = ["f.*,p.pr_valor as taza_impuesto"];
             $join = ["left join parametros p 
                     on p.id = f.prod_impuesto_id "];
-            $condiciones = ["f.id" => $IDPROD, "f.tienda_id" => $TIENDA, "f.prod_agotado" => 0];
+            $condiciones = ["f.id" => $IDPROD, "f.tienda_id" => $TIENDA];
             $ordenamiento = "";
             $agrupamiento = "";
             $result = $this->select($table, $campos, $condiciones, $join, $ordenamiento, $agrupamiento);
             if ($result[0] == true) {
                 $res = $result[1];
                 if (count($res) > 0) {
-                    $producto_id = $res[0]["id"];
-                    $producto_nom = $res[0]["prod_nombre"];
-                    $producto_precio = $res[0]["prod_precio"];
-                    $prod_img = $res[0]["prod_img"];
-                    $html = '<tr data-kt-pos-element="item" data-kt-pos-item-id="' . $producto_id . '" data-kt-pos-item-price="' . $producto_precio . '">
-                    <td class="pe-0">
-                        <div class="d-flex align-items-center">
-                            <img src="assets/media/stock/food/img-2.jpg" class="w-50px h-50px rounded-3 me-3" alt="">
-                            <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">' . $producto_nom . '</span>
-                        </div>
-                    </td>
-                    <td class="pe-0">
-                        <div class="position-relative d-flex align-items-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-max="10" data-kt-dialer-step="1" data-kt-dialer-decimals="0">
-                            <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-400" data-kt-dialer-control="decrease">
-                                <span class="svg-icon svg-icon-3x">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect>
-                                    </svg>
-                                </span>
-                            </button>
-                            <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" readonly="readonly" value="1">
-                            <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-400" data-kt-dialer-control="increase">
-                                <span class="svg-icon svg-icon-3x">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor"></rect>
-                                        <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect>
-                                    </svg>
-                                </span>
-                            </button>
-                        </div>
-                    </td>
-                    <td class="text-end">
-                        <span class="fw-bold text-primary fs-2" data-kt-pos-element="item-total">$' . $producto_precio . '</span>
-                    </td>
-                </tr>';
-
-                    echo json_encode(array("success" => true, "html" => $html, "data" => $res[0]));
-                    exit();
-
+                    $prod_agotado = $res[0]["prod_agotado"];
+                    if ($prod_agotado == 0) {
+                        $producto_id = $res[0]["id"];
+                        $producto_nom = $res[0]["prod_nombre"];
+                        $producto_precio = $res[0]["prod_precio"];
+                        $prod_img = $res[0]["prod_img"];
+                        $html = '<tr data-kt-pos-element="item" data-kt-pos-item-id="' . $producto_id . '" data-kt-pos-item-price="' . $producto_precio . '">
+                        <td class="pe-0">
+                            <div class="d-flex align-items-center">
+                                <img src="' . $prod_img . '" class="w-50px h-50px rounded-3 me-3" alt="">
+                                <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">' . $producto_nom . '</span>
+                            </div>
+                        </td>
+                        <td class="pe-0">
+                            <div class="position-relative d-flex align-items-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-max="10" data-kt-dialer-step="1" data-kt-dialer-decimals="0">
+                                <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-400" data-kt-dialer-control="decrease">
+                                    <span class="svg-icon svg-icon-3x">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect>
+                                        </svg>
+                                    </span>
+                                </button>
+                                <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" readonly="readonly" value="1">
+                                <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-400" data-kt-dialer-control="increase">
+                                    <span class="svg-icon svg-icon-3x">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor"></rect>
+                                            <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor"></rect>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="text-end">
+                            <span class="fw-bold text-primary fs-2" data-kt-pos-element="item-total">$' . $producto_precio . '</span>
+                        </td>
+                        </tr>';
+                        echo json_encode(array("success" => true, "html" => $html, "data" => $res[0]));
+                        exit();
+                    } else {
+                        echo json_encode(array("success" => false, "html" => 'Producto Agotado', "data" => $res[0]));
+                        exit();
+                    }
                 } else {
+                    echo json_encode(array("success" => false, "html" => 'Producto no existe', "data" => $res[0]));
+                    exit();
                 }
             } else {
-                echo json_encode($result);
+                echo json_encode(array("success" => false, "html" => 'Error inesperado, intentelo de nuevo', "data" => []));
                 exit();
             }
         } catch (Exception $e) {

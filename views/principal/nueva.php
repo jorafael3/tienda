@@ -12,7 +12,7 @@ $PRODUCT_CAT_HEIGHT = "160px";
 
 ?>
 
-<div class="container mt-10">
+<div class="container mt-1">
     <div class="row justify-content-center">
         <!-- <div class="col-md-12">
             <div class="row">
@@ -55,7 +55,7 @@ $PRODUCT_CAT_HEIGHT = "160px";
                                         <li class="nav-item mb-3 me-2" role="presentation">
                                             <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg <?php echo $product_cat_active ?>" data-bs-toggle="pill" href="#kt_pos_food_content_<?php echo $product_cat_position ?>" style="width: <?php echo $PRODUCT_CAT_WIDTH ?>;height: <?php echo $PRODUCT_CAT_HEIGHT ?>" aria-selected="true" role="tab">
                                                 <div class="nav-icon mb-3">
-                                                    <img src="<?php echo $product_cat_icon ?>" class="w-50px" alt="img">
+                                                    <img src="<?php echo $product_cat_icon ?>" class="w-100px" alt="img">
                                                 </div>
                                                 <div class="">
                                                     <span class="text-gray-800 fw-bold fs-4 d-block"><?php echo $product_cat_name ?></span>
@@ -99,11 +99,27 @@ $PRODUCT_CAT_HEIGHT = "160px";
                                                         if ($product_cat_position == $product_cat_position_sub) {
                                                             $prod_nombre = $rows["prod_nombre"];
                                                             $prod_descripcion = $rows["prod_descripcion"];
-                                                            $prod_precio = $rows["prod_precio"];
+                                                            $prod_img = $rows["prod_img"];
+                                                            $img_path = constant("URL") . "recursos/products/imgs/" . $prod_img;
                                                             $prod_id = $rows["id"];
-                                                            $prod_precio = number_format($prod_precio, 2, '.', ',');
-                                                            $prod_precio = '$' . $prod_precio;
+                                                            $prod_precio = $rows["prod_precio"];
                                                             $prod_agotado = $rows["prod_agotado"];
+                                                            $prod_discount = $rows["prod_discount"];
+                                                            $prod_discount_type = $rows["prod_discount_type"];
+                                                            $prod_discount_value = $rows["prod_discount_value"];
+
+                                                            $precio_sin_descuento = "";
+                                                            if ($prod_discount == 1) {
+                                                                $precio_sin_descuento = "$" . $prod_precio;
+                                                                if ($prod_discount_type == 0) {
+                                                                    $prod_precio = floatval($prod_precio) - floatval($prod_discount_value);
+                                                                } else {
+                                                                    $prod_precio = floatval($prod_precio) - (floatval($prod_precio * ($prod_discount_value / 100)));
+                                                                }
+                                                            }
+                                                            $prod_precio = number_format($prod_precio, 2, '.', ',');
+                                                            $prod_precio = "$" . $prod_precio;
+
 
 
                                                     ?>
@@ -114,7 +130,7 @@ $PRODUCT_CAT_HEIGHT = "160px";
                                                                         <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
                                                                             <div class="col-2 me-7 mb-4" style="width: 200px;"> <!-- Establece el ancho máximo del contenedor -->
                                                                                 <div class="">
-                                                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzWGfd1JADxHpATx3AfNO1jrhB7z1D48gVP6uYq-nxQw&s" alt="image" style="width: 100%; height: auto;"> <!-- Establece el ancho al 100% y deja que la altura se ajuste automáticamente -->
+                                                                                    <img src="<?php echo $prod_img ?>" alt="image" style="width: 100%; height: 150px;"> <!-- Establece el ancho al 100% y deja que la altura se ajuste automáticamente -->
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-8 flex-grow-1">
@@ -122,15 +138,41 @@ $PRODUCT_CAT_HEIGHT = "160px";
                                                                                     <div class="col-12">
                                                                                         <div class="d-flex align-items-center mb-2">
                                                                                             <h3 class="text-gray-900  fs-2 fw-bold me-1"><?php echo $prod_nombre ?></h3>
+                                                                                            <?php
+                                                                                            if ($prod_discount == 1) {
+                                                                                            ?>
+                                                                                                <a class="btn btn-sm btn-light-success fw-bolder ms-2 fs-7 py-1 px-3">
+                                                                                                    <?php echo ($prod_discount_type == 1 ?  "-" . $prod_discount_value . "% Descuento" : "-$" . $prod_discount_value . " Descuento") ?>
+                                                                                                </a>
+
+                                                                                            <?php
+                                                                                            }
+                                                                                            ?>
+
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="col-12 mb-2">
                                                                                         <span class="text-gray-600 fw-semibold d-block fs-6 mt-3"><?php echo $prod_descripcion ?></span>
 
                                                                                     </div>
-                                                                                    <div class="col-12 mt-20 d-flex justify-content-between align-items-center">
-                                                                                        <h5 class="text-dark fw-bold fs-1 mr-3"><?php echo $prod_precio ?></h5>
-                                                                                        <button href="#" class="btn btn-sm btn-primary me-2 btn-agregar"  data-product-id="<?php echo $prod_id ?>">Agregar</button>
+                                                                                    <div class="col-12 mt-10 d-flex justify-content-between align-ite5s-center">
+                                                                                        <h5 class="text-dark fw-bold fs-1 mr-3"><?php echo $prod_precio ?>
+                                                                                            <span class="fs-5 text-muted text-decoration-line-through"><?php echo $precio_sin_descuento ?></span>
+                                                                                        </h5>
+                                                                                        <?php
+                                                                                        if ($prod_agotado == 0) {
+
+                                                                                        ?>
+                                                                                            <button href="#" class="btn btn-sm btn-primary me-2 btn-agregar" data-product-id="<?php echo $prod_id ?>">Agregar</button>
+                                                                                        <?php
+                                                                                        } else {
+                                                                                        ?>
+                                                                                            <span class="fs-4 text-danger me-2 fw-bold">Agotado</span>
+
+                                                                                        <?php
+                                                                                        }
+                                                                                        ?>
+
                                                                                     </div>
                                                                                 </div>
 
@@ -179,10 +221,10 @@ $PRODUCT_CAT_HEIGHT = "160px";
                         <div class="card card-flush bg-body" id="kt_pos_form">
                             <!--begin::Header-->
                             <div class="card-header pt-5">
-                                <h3 class="card-title fw-bold text-gray-800 fs-2qx">Current Order</h3>
+                                <h3 class="card-title fw-bold text-gray-800 fs-2qx">Orden</h3>
                                 <!--begin::Toolbar-->
                                 <div class="card-toolbar">
-                                    <a href="#" class="btn btn-light-primary fs-4 fw-bold py-4">Clear All</a>
+                                    <button data-kt-dialer-control="Clear_All" class="btn btn-light-primary fs-4 fw-bold py-4">Limpiar</button>
                                 </div>
                                 <!--end::Toolbar-->
                             </div>
@@ -204,7 +246,7 @@ $PRODUCT_CAT_HEIGHT = "160px";
                                         <!--end::Table head-->
                                         <!--begin::Table body-->
                                         <tbody>
-                                           
+
                                         </tbody>
                                         <!--end::Table body-->
                                     </table>
@@ -212,11 +254,16 @@ $PRODUCT_CAT_HEIGHT = "160px";
                                 </div>
                                 <!--end::Table container-->
                                 <!--begin::Summary-->
+                                <div class="col-12 p-2">
+                                    <textarea class="form-control nota" placeholder="Nota" name="" id="" cols="30" rows="3"></textarea>
+
+                                </div>
+
                                 <div class="d-flex flex-stack bg-success rounded-3 p-6 mb-11">
                                     <!--begin::Content-->
                                     <div class="fs-6 fw-bold text-white">
                                         <span class="d-block lh-1 mb-2">Subtotal</span>
-                                        <!-- <span class="d-block mb-2">Discounts</span> -->
+                                        <span class="d-block mb-2">Discounts</span>
                                         <span class="d-block mb-9">Tax(15%)</span>
                                         <span class="d-block fs-2qx lh-1">Total</span>
                                     </div>
@@ -224,7 +271,7 @@ $PRODUCT_CAT_HEIGHT = "160px";
                                     <!--begin::Content-->
                                     <div class="fs-6 fw-bold text-white text-end">
                                         <span class="d-block lh-1 mb-2" data-kt-pos-element="total">$0.00</span>
-                                        <!-- <span class="d-block mb-2" data-kt-pos-element="discount">-$8.00</span> -->
+                                        <span class="d-block mb-2" data-kt-pos-element="discount">$0.00</span>
                                         <span class="d-block mb-9" data-kt-pos-element="tax">$0.00</span>
                                         <span class="d-block fs-2qx lh-1" data-kt-pos-element="grant-total">$0.00</span>
                                     </div>
@@ -234,53 +281,87 @@ $PRODUCT_CAT_HEIGHT = "160px";
                                 <!--begin::Payment Method-->
                                 <div class="m-0">
                                     <!--begin::Title-->
-                                    <h1 class="fw-bold text-gray-800 mb-5">Payment Method</h1>
+                                    <h1 class="fw-bold text-gray-800 mb-5">Metodos de pago</h1>
                                     <!--end::Title-->
                                     <!--begin::Radio group-->
-                                    <div class="d-flex flex-equal gap-5 gap-xxl-9 px-0 mb-12" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]" data-kt-initialized="1">
-                                        <!--begin::Radio-->
-                                        <label class="btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-3 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4" data-kt-button="true">
-                                            <!--begin::Input-->
+                                    <div class="d-flex flex-equal gap-5 gap-xxl-9 px-0 mb-8" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button]" data-kt-initialized="1">
+                                        <ul class="nav nav-pills nav-pills-custom mb-3 m-2" role="tablist">
+                                            <!--begin::Item-->
+
+                                            <?php
+                                            // foreach (1) {
+
+                                            ?>
+                                            <div class="row ">
+                                                <div class="col-4">
+                                                    <li class="nav-item mb-3 me-2" role="presentation">
+                                                        <a data-kt-dialer-control="pay_m" data-kt-dialer-check_value="1" class="bg-light nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-5 pb-7 page-bg <?php echo $product_cat_active ?>" data-bs-toggle="pill" style="width: 100px;height: 100px" aria-selected="true" role="tab">
+                                                            <div class="nav-icon mb-2">
+                                                                <i class="bi bi-paypal fs-2hx"></i>
+                                                            </div>
+                                                            <div class="">
+                                                                <span class="text-gray-800 fw-bold fs-4 d-block">Paypal</span>
+
+                                                            </div>
+                                                        </a>
+
+                                                    </li>
+                                                </div>
+                                                <div class="col-4">
+                                                    <li class="nav-item mb-3 me-2" role="presentation">
+                                                        <a data-kt-dialer-control="pay_m" data-kt-dialer-check_value="2" class="bg-light nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-5 pb-7 page-bg <?php echo $product_cat_active ?>" data-bs-toggle="pill" style="width: 100px;height: 100px" aria-selected="true" role="tab">
+                                                            <div class="nav-icon mb-2">
+                                                                <i class="bi bi-credit-card-fill fs-2hx"></i>
+                                                            </div>
+                                                            <div class="">
+                                                                <span class="text-gray-800 fw-bold fs-4 d-block">Tarjeta</span>
+
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </div>
+                                                <div class="col-4">
+                                                    <li class="nav-item mb-3 me-2" role="presentation">
+                                                        <a data-kt-dialer-control="pay_m" data-kt-dialer-check_value="3" class="bg-light nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-5 pb-7 page-bg <?php echo $product_cat_active ?>" data-bs-toggle="pill" style="width: 100px;height: 100px" aria-selected="true" role="tab">
+                                                            <div class="nav-icon mb-2">
+                                                                <i class="bi bi-credit-card-fill fs-2hx"></i>
+                                                            </div>
+                                                            <div class="">
+                                                                <span class="text-gray-800 fw-bold fs-4 d-block">Tarjeta</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </div>
+
+                                            </div>
+
+                                            <?php
+
+                                            // }
+                                            ?>
+
+
+
+                                        </ul>
+                                        <!-- <label class="btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-3 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4" data-kt-button="true">
                                             <input class="btn-check" type="radio" name="method" value="0">
-                                            <!--end::Input-->
-                                            <!--begin::Icon-->
                                             <i class="fonticon-cash-payment fs-2hx mb-2 pe-0"></i>
-                                            <!--end::Icon-->
-                                            <!--begin::Title-->
                                             <span class="fs-7 fw-bold d-block">Cash</span>
-                                            <!--end::Title-->
                                         </label>
-                                        <!--end::Radio-->
-                                        <!--begin::Radio-->
                                         <label class="btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-3 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4 active" data-kt-button="true">
-                                            <!--begin::Input-->
                                             <input class="btn-check" type="radio" name="method" value="1">
-                                            <!--end::Input-->
-                                            <!--begin::Icon-->
                                             <i class="fonticon-card fs-2hx mb-2 pe-0"></i>
-                                            <!--end::Icon-->
-                                            <!--begin::Title-->
                                             <span class="fs-7 fw-bold d-block">Card</span>
-                                            <!--end::Title-->
                                         </label>
-                                        <!--end::Radio-->
-                                        <!--begin::Radio-->
                                         <label class="btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-3 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4" data-kt-button="true">
-                                            <!--begin::Input-->
                                             <input class="btn-check" type="radio" name="method" value="2">
-                                            <!--end::Input-->
-                                            <!--begin::Icon-->
                                             <i class="fonticon-mobile-payment fs-2hx mb-2 pe-0"></i>
-                                            <!--end::Icon-->
-                                            <!--begin::Title-->
                                             <span class="fs-7 fw-bold d-block">E-Wallet</span>
-                                            <!--end::Title-->
-                                        </label>
-                                        <!--end::Radio-->
+                                        </label> -->
                                     </div>
                                     <!--end::Radio group-->
                                     <!--begin::Actions-->
-                                    <button class="btn btn-primary fs-1 w-100 py-4">Print Bills</button>
+                                    <button data-kt-dialer-control="Pay" class="btn btn-primary fs-1 w-100 py-4">Pagar</button>
                                     <!--end::Actions-->
                                 </div>
                                 <!--end::Payment Method-->
